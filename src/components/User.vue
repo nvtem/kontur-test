@@ -1,6 +1,6 @@
 <template lang="pug">
   b-container
-    b-btn.mt-4(:to="`/users`" variant="outline-primary") 🡨 Users
+    b-btn.mt-4(:to="`/users`" variant="outline-primary") < Users
 
     b-alert.mt-4(v-if="hasError" variant="danger" show) Error! User does not exist.
 

@@ -1,6 +1,6 @@
 <template lang="pug">
   b-container
-    b-btn.mt-4(:to="`/posts`" variant="outline-primary") 🡨 Posts
+    b-btn.mt-4(:to="`/posts`" variant="outline-primary") < Posts
 
     b-alert.mt-4(v-if="hasError" variant="danger" show) Error! Post does not exist.
 
