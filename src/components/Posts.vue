@@ -2,16 +2,25 @@
   b-container
     h3.mt-4.mb-4 Posts
 
-    router-link(v-for="post of posts" :to="`/posts/${post.id}`")
-      b-card.mt-2 {{ post.title }}
+    error-alert.mt-4(v-if="hasError")
+
+    template(v-else)
+      router-link(v-for="post of posts" :to="`/posts/${post.id}`")
+        b-card.mt-2 {{ post.title }}
 </template>
 
 <script>
+  import ErrorAlert from './ErrorAlert'
   import { mapActions } from 'vuex'
 
   export default  {
+    components: {
+      ErrorAlert
+    },
+
     data: () => ({
-      posts: []
+      posts: [],
+      hasError: false
     }),
 
     created() {
@@ -19,6 +28,9 @@
         .then(data => {
           this.posts = data
         })
+        .catch(() =>
+          this.hasError = true
+        )
     },
 
     methods: {

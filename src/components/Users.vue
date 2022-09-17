@@ -2,27 +2,39 @@
   b-container
     h3.mt-4.mb-4 Users
 
-    router-link(v-for="user of users" :to="`/user/${user.id}`")
-      b-card.mt-2 {{ user.name }}
+    error-alert.mt-4(v-if="hasError")
+
+    template(v-else)
+      router-link(v-for="user of users" :to="`/user/${user.id}`")
+        b-card.mt-2 {{ user.name }}
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+  import ErrorAlert from './ErrorAlert'
+  import { mapActions } from 'vuex'
 
-export default  {
-  data: () => ({
-    users: []
-  }),
+  export default  {
+    components: {
+      ErrorAlert
+    },
 
-  created() {
-    this.getUsers()
-      .then(data => {
-        this.users = data
-      })
-  },
+    data: () => ({
+      users: [],
+      hasError: false
+    }),
 
-  methods: {
-    ...mapActions(['getUsers'])
+    created() {
+      this.getUsers()
+        .then(data => {
+          this.users = data
+        })
+        .catch(() =>
+          this.hasError = true
+        )
+    },
+
+    methods: {
+      ...mapActions(['getUsers'])
+    }
   }
-}
 </script>

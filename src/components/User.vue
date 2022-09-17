@@ -2,7 +2,7 @@
   b-container
     b-btn.mt-4(:to="`/users`" variant="outline-primary") < Users
 
-    b-alert.mt-4(v-if="hasError" variant="danger" show) Error! User does not exist.
+    error-alert.mt-4(v-if="hasError")
 
     template(v-else)
       template(v-if="loaded")
@@ -43,9 +43,14 @@
 </template>
 
 <script>
+  import ErrorAlert from './ErrorAlert'
   import { mapActions } from 'vuex'
 
   export default {
+    components: {
+      ErrorAlert
+    },
+
     data() {
       return {
         user: {},

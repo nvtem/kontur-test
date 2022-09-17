@@ -2,7 +2,7 @@
   b-container
     b-btn.mt-4(:to="`/posts`" variant="outline-primary") < Posts
 
-    b-alert.mt-4(v-if="hasError" variant="danger" show) Error! Post does not exist.
+    error-alert.mt-4(v-if="hasError")
 
     template(v-else)
       b-card.mt-4(:title="title" bg-variant="light" )
@@ -17,9 +17,14 @@
 </template>
 
 <script>
+  import ErrorAlert from './ErrorAlert'
   import { mapActions } from 'vuex'
 
   export default {
+    components: {
+      ErrorAlert
+    },
+
     data: () => ({
       body: '',
       title: '',
@@ -41,6 +46,9 @@
         .then(data => {
           this.comments = data
         })
+        .catch(() =>
+          this.hasError = true
+        )
     },
 
     methods: {
